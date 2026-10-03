@@ -1,0 +1,91 @@
+{
+  "name": "系统与软件进程管理 (System & Process)",
+  "description": "提供启动与关闭软件、读写剪贴板、检测系统运行状态、高精度延时等待与电脑关机休眠等功能",
+  "group": "Opérations système",
+  "actions": {
+    "AttachProcess": {
+      "display_name": "Attacher processus (AttachProcess)",
+      "description": "连接并附加到目标软件进程，支持动态加载扩展模块与执行初始化逻辑"
+    },
+    "CallMethod": {
+      "display_name": "Appeler méthode (CallMethod)",
+      "description": "调用目标进程加载模块中的指定导出函数并获取执行结果"
+    },
+    "ClipboardValue": {
+      "display_name": "Presse-papiers (ClipboardValue)",
+      "description": "读取系统剪贴板中的文字内容，或将新文字写入剪贴板"
+    },
+    "CloseHandle": {
+      "display_name": "Fermer le handle (CloseHandle)",
+      "description": "释放已打开的系统资源句柄，保证系统稳定运行"
+    },
+    "CreateObject": {
+      "display_name": "Créer objet (CreateObject)",
+      "description": "在内存中创建结构化数据实体（支持Point、Rect、Size、Color、Range、DateTime、Dict及Tuple等）"
+    },
+    "ExistProcess": {
+      "display_name": "Processus existant (ExistProcess)",
+      "description": "检查指定的应用程序或进程当前是否正在系统后台运行"
+    },
+    "Exit": {
+      "display_name": "Quitter (Exit)",
+      "description": "直接终止当前自动化工作流程的执行"
+    },
+    "Jump": {
+      "display_name": "Sauter vers label (Jump)",
+      "description": "跳转到指定的工作流动作步骤或标签处继续执行"
+    },
+    "KillProcess": {
+      "display_name": "Terminer le processus (KillProcess)",
+      "description": "根据进程名称、路径或表达式结束指定的系统进程"
+    },
+    "LaunchFile": {
+      "display_name": "Lancer fichier (LaunchFile)",
+      "description": "使用操作系统默认关联程序打开指定的文档、表格、图片或脚本"
+    },
+    "OpenApplication": {
+      "display_name": "Ouvrir l'application (OpenApplication)",
+      "description": "启动指定的系统应用程序并可传入命令行参数与工作目录（非阻塞运行）"
+    },
+    "OpenUrl": {
+      "display_name": "Ouvrir l'URL (OpenUrl)",
+      "description": "使用操作系统默认浏览器打开指定的网页网址 URL"
+    },
+    "Random": {
+      "display_name": "Délai aléatoire (Random)",
+      "description": "生成指定区间范围 [min, max] 内的随机整数"
+    },
+    "ReadMemory": {
+      "display_name": "Lire la mémoire (ReadMemory)",
+      "description": "读取目标软件进程或模块内存地址中的数据，支持多种数据类型与偏移链解析"
+    },
+    "Runas": {
+      "display_name": "Exécuter en tant qu'administrateur (Runas)",
+      "description": "使用管理员权限（UAC提权）启动指定程序或执行特权命令"
+    },
+    "SearchMemory": {
+      "display_name": "Rechercher dans la mémoire (SearchMemory)",
+      "description": "在目标软件进程或模块内存中检索特定的特征码或字节序列"
+    },
+    "StartProcess": {
+      "display_name": "Démarrer le processus (StartProcess)",
+      "description": "在后台创建并启动指定的独立操作系统进程或命令行任务"
+    },
+    "SuspendSystem": {
+      "display_name": "Mettre en veille (SuspendSystem)",
+      "description": "控制计算机进入睡眠、休眠、锁屏、重启或关机状态"
+    },
+    "UserAdd": {
+      "display_name": "Ajouter utilisateur (UserAdd)",
+      "description": "在当前操作系统中创建新的本地电脑用户账户"
+    },
+    "Wait": {
+      "display_name": "Attendre (Wait)",
+      "description": "暂停执行等待指定时间（支持秒数或毫秒数）"
+    },
+    "WriteMemory": {
+      "display_name": "Écrire dans la mémoire (WriteMemory)",
+      "description": "向目标软件进程或模块内存地址写入数据，支持自动解除写保护"
+    }
+  }
+}
