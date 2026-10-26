@@ -1,144 +1,11 @@
 {
   "plugin_id": "xy_system",
   "name": "系统与软件进程管理 (System & Process)",
-  "version": "0.51.0",
+  "version": "0.53.0",
   "group": "System",
   "group_icon": "⚙",
   "description": "提供启动与关闭软件、读写剪贴板、检测系统运行状态、高精度延时等待与电脑关机休眠等功能",
   "actions": [
-    {
-      "tag": "AttachProcess",
-      "display_name": "附加进程 (AttachProcess)",
-      "icon": "📎",
-      "platforms": "All",
-      "description": "连接并附加到目标软件进程，支持动态加载扩展模块与执行初始化逻辑",
-      "keywords": [
-        "system",
-        "process",
-        "attach",
-        "inject",
-        "hook",
-        "附加进程",
-        "进程注入",
-        "动态库"
-      ],
-      "fields": [
-        {
-          "name": "app",
-          "display_name": "目标进程",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "目标进程名称、PID 或完整路径"
-        },
-        {
-          "name": "dy",
-          "display_name": "模块动态库",
-          "intrinsic_type": "FilePicker",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "待注入或加载的动态链接库文件路径"
-        },
-        {
-          "name": "entrypoint",
-          "display_name": "入口函数",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "动态库导出入口执行函数名称"
-        },
-        {
-          "name": "data",
-          "display_name": "初始化数据",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "传递给入口函数的初始化配置或载荷字符串"
-        },
-        {
-          "name": "command_line",
-          "display_name": "命令行参数",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "可选的附加启动参数"
-        }
-      ],
-      "output_type": "None"
-    },
-    {
-      "tag": "CallMethod",
-      "display_name": "调用方法 (CallMethod)",
-      "icon": "⚡",
-      "platforms": "All",
-      "description": "调用目标进程加载模块中的指定导出函数并获取执行结果",
-      "keywords": [
-        "system",
-        "process",
-        "method",
-        "call",
-        "export",
-        "调用方法",
-        "导出函数"
-      ],
-      "fields": [
-        {
-          "name": "object",
-          "display_name": "模块/会话对象",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "目标模块名称或会话标识"
-        },
-        {
-          "name": "method",
-          "display_name": "方法名称",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "待调用的导出函数名称"
-        },
-        {
-          "name": "return_type",
-          "display_name": "返回值类型",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "void",
-          "presets": [
-            "int",
-            "uint",
-            "string",
-            "pointer",
-            "bool",
-            "void",
-            "float"
-          ],
-          "description": "函数返回值的数据解析类型"
-        },
-        {
-          "name": "abi",
-          "display_name": "调用约定",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "default",
-          "presets": [
-            "default",
-            "stdcall",
-            "fastcall",
-            "thiscall"
-          ],
-          "description": "底层函数调用约定"
-        }
-      ],
-      "output_type": "Mixed"
-    },
     {
       "tag": "ClipboardValue",
       "display_name": "读取/设置剪贴板内容 (ClipboardValue)",
@@ -158,8 +25,9 @@
         {
           "name": "value",
           "display_name": "写入内容 (留空则获取)",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "intrinsic_type": "String",
+          "group": "剪贴板内容",
+          "default_type": "String",
           "default_value": "",
           "presets": [],
           "description": "待写入文本，留空表示读取系统剪贴板"
@@ -168,90 +36,81 @@
       "output_type": "string"
     },
     {
-      "tag": "CloseHandle",
-      "display_name": "关闭系统句柄 (CloseHandle)",
-      "icon": "🔒",
+      "tag": "ExecuteCommand",
+      "display_name": "执行命令并获取输出 (ExecuteCommand)",
+      "icon": "💻",
       "platforms": "All",
-      "description": "释放已打开的系统资源句柄，保证系统稳定运行",
+      "description": "同步运行 CMD / PowerShell / Shell 命令行脚本并高精度捕获输出字符串与退出代码",
       "keywords": [
         "system",
-        "handle",
-        "close",
-        "release",
-        "关闭句柄",
-        "释放句柄"
+        "cmd",
+        "command",
+        "shell",
+        "powershell",
+        "exec",
+        "执行命令"
       ],
       "fields": [
         {
-          "name": "type",
-          "display_name": "句柄类型",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "Process",
-          "presets": [
-            "Process",
-            "Thread",
-            "File",
-            "Event",
-            "Mutex",
-            "Semaphore",
-            "Key",
-            "All"
-          ],
-          "description": "系统句柄资源类型"
-        },
-        {
-          "name": "name",
-          "display_name": "句柄名称或关键字",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "name": "command",
+          "display_name": "命令行脚本",
+          "intrinsic_type": "String",
+          "required": true,
+          "group": "命令行配置",
+          "default_type": "String",
           "default_value": "",
           "presets": [],
-          "description": "待释放句柄的名称、标识或过滤关键字"
+          "description": "待执行的命令"
         },
         {
-          "name": "exe_file",
-          "display_name": "关联进程文件",
-          "intrinsic_type": "FilePicker",
-          "default_type": "string",
+          "name": "shell",
+          "display_name": "Shell 解释器",
+          "intrinsic_type": "Enum",
+          "group": "命令行配置",
+          "default_type": "String",
+          "default_value": "auto",
+          "presets": [
+            "auto",
+            "cmd",
+            "powershell",
+            "bash",
+            "sh"
+          ],
+          "description": "指定 Shell 解释器"
+        },
+        {
+          "name": "working_directory",
+          "display_name": "工作目录",
+          "intrinsic_type": "Path",
+          "group": "工作环境",
+          "default_type": "Path",
           "default_value": "",
           "presets": [],
-          "description": "关联的可执行程序文件（可选）"
-        }
-      ],
-      "output_type": "bool"
-    },
-    {
-      "tag": "CreateObject",
-      "display_name": "创建对象 (CreateObject)",
-      "icon": "📦",
-      "platforms": "All",
-      "description": "在内存中创建结构化数据实体（支持Point、Rect、Size、Color、Range、DateTime、Dict及Tuple等）",
-      "keywords": [
-        "system",
-        "object",
-        "create",
-        "struct",
-        "创建对象",
-        "实体构造"
-      ],
-      "fields": [
+          "description": "执行工作路径"
+        },
         {
-          "name": "value",
-          "display_name": "数据载荷/模板",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
+          "name": "timeout",
+          "display_name": "超时时间(秒)",
+          "intrinsic_type": "Integer",
+          "group": "工作环境",
+          "default_type": "Number",
+          "default_value": "30",
           "presets": [
-            "{\"x\": 0, \"y\": 0}",
-            "{\"width\": 1920, \"height\": 1080}",
-            "{\"x\": 0, \"y\": 0, \"width\": 1920, \"height\": 1080}",
-            "{\"r\": 255, \"g\": 0, \"b\": 0, \"a\": 255}",
-            "0..100",
-            "now",
-            "[1, 2, 3]"
+            "30",
+            "60"
           ],
-          "description": "字面量、JSON 模板或构造表达式"
+          "description": "最大运行耗时"
+        },
+        {
+          "name": "env",
+          "display_name": "环境变量",
+          "intrinsic_type": "String",
+          "group": "高级选项",
+          "is_advanced": true,
+          "default_type": "String",
+          "default_value": "",
+          "presets": [],
+          "description": "环境变量 (KEY=VALUE)"
         }
       ],
       "output_type": "Mixed"
@@ -274,8 +133,10 @@
         {
           "name": "app",
           "display_name": "目标进程",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "intrinsic_type": "String",
+          "required": true,
+          "group": "进程选择",
+          "default_type": "String",
           "default_value": "",
           "presets": [
             "explorer.exe",
@@ -287,79 +148,192 @@
       "output_type": "bool"
     },
     {
-      "tag": "Exit",
-      "display_name": "退出 (Exit)",
-      "icon": "🚪",
+      "tag": "GetEnv",
+      "display_name": "获取环境变量 (GetEnv)",
+      "icon": "🌱",
       "platforms": "All",
-      "description": "直接终止当前自动化工作流程的执行",
+      "description": "获取当前进程、用户或系统级的环境变量数值",
       "keywords": [
         "system",
-        "exit",
-        "quit",
-        "terminate",
-        "退出",
-        "终止流程"
-      ],
-      "fields": [],
-      "output_type": "None"
-    },
-    {
-      "tag": "Jump",
-      "display_name": "跳转 (Jump)",
-      "icon": "🦘",
-      "platforms": "All",
-      "description": "跳转到指定的工作流动作步骤或标签处继续执行",
-      "keywords": [
-        "system",
-        "jump",
-        "goto",
-        "label",
-        "跳转",
-        "转向"
+        "env",
+        "environment",
+        "get",
+        "环境变量"
       ],
       "fields": [
         {
-          "name": "target",
-          "display_name": "目标节点/标签",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "name": "name",
+          "display_name": "变量名称",
+          "intrinsic_type": "String",
+          "required": true,
+          "group": "变量配置",
+          "default_type": "String",
           "default_value": "",
-          "presets": [],
-          "description": "跳转的目标动作标签或节点标识"
+          "presets": [
+            "PATH",
+            "TEMP",
+            "JAVA_HOME"
+          ],
+          "description": "环境变量键名"
+        },
+        {
+          "name": "scope",
+          "display_name": "作用域",
+          "intrinsic_type": "Enum",
+          "group": "变量配置",
+          "default_type": "String",
+          "default_value": "process",
+          "presets": [
+            "process",
+            "user",
+            "system"
+          ],
+          "description": "作用域"
         }
       ],
-      "output_type": "None"
+      "output_type": "string"
+    },
+    {
+      "tag": "GetProcesses",
+      "display_name": "获取进程列表 (GetProcesses)",
+      "icon": "📋",
+      "platforms": "All",
+      "description": "检索当前系统正在运行的所有进程列表，支持根据名称或路径通配符进行过滤",
+      "keywords": [
+        "system",
+        "process",
+        "list",
+        "tasklist",
+        "get_processes",
+        "获取进程列表",
+        "枚举进程"
+      ],
+      "fields": [
+        {
+          "name": "filter",
+          "display_name": "进程过滤 (支持通配符)",
+          "intrinsic_type": "String",
+          "group": "检索过滤",
+          "default_type": "String",
+          "default_value": "",
+          "presets": [
+            "*",
+            "chrome.exe",
+            "notepad.exe"
+          ],
+          "description": "进程名称或通配符过滤（如 *chrome*，留空返回全部）"
+        }
+      ],
+      "output_type": "string"
+    },
+    {
+      "tag": "GetSystemInfo",
+      "display_name": "获取系统与硬件信息 (GetSystemInfo)",
+      "icon": "🖥️",
+      "platforms": "All",
+      "description": "获取计算机 CPU 核心数、内存可用空间、主机名及操作系统版本等指标",
+      "keywords": [
+        "system",
+        "sysinfo",
+        "cpu",
+        "memory",
+        "hardware",
+        "系统信息"
+      ],
+      "fields": [
+        {
+          "name": "category",
+          "display_name": "分类",
+          "intrinsic_type": "Enum",
+          "group": "系统属性",
+          "default_type": "String",
+          "default_value": "all",
+          "presets": [
+            "all",
+            "cpu",
+            "memory",
+            "os"
+          ],
+          "description": "查询分类"
+        }
+      ],
+      "output_type": "Mixed"
     },
     {
       "tag": "KillProcess",
       "display_name": "终止进程 (KillProcess)",
       "icon": "💀",
       "platforms": "All",
-      "description": "根据进程名称、路径或表达式结束指定的系统进程",
+      "description": "根据进程 PID、进程名称或路径通配符结束操作系统进程，支持强制结束与终止子进程树",
       "keywords": [
         "system",
         "process",
         "kill",
         "terminate",
         "终止进程",
-        "结束进程"
+        "结束进程",
+        "taskkill",
+        "tree"
       ],
       "fields": [
         {
-          "name": "app",
+          "name": "target_type",
+          "display_name": "匹配模式",
+          "intrinsic_type": "Enum",
+          "required": true,
+          "group": "匹配与目标",
+          "default_type": "String",
+          "default_value": "ByName",
+          "presets": [
+            "ByName",
+            "ByPid",
+            "ByPath"
+          ],
+          "description": "终止目标匹配模式：ByPid (按进程PID), ByName (按进程名), ByPath (按程序完整路径)"
+        },
+        {
+          "name": "target",
           "display_name": "目标进程",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "intrinsic_type": "String",
+          "required": true,
+          "group": "匹配与目标",
+          "default_type": "String",
           "default_value": "",
           "presets": [],
-          "description": "待结束的进程名称、路径或通配符"
+          "description": "待结束的进程PID、进程名称或路径通配符（兼容旧版 app 字段）"
+        },
+        {
+          "name": "force",
+          "display_name": "强制结束",
+          "intrinsic_type": "Boolean",
+          "group": "终止选项",
+          "default_type": "Boolean",
+          "default_value": "true",
+          "presets": [
+            "true",
+            "false"
+          ],
+          "description": "是否强制结束目标进程 (true 为强制终止，false 为尝试优雅关闭)"
+        },
+        {
+          "name": "terminate_tree",
+          "display_name": "终止进程树",
+          "intrinsic_type": "Boolean",
+          "group": "终止选项",
+          "default_type": "Boolean",
+          "default_value": "false",
+          "presets": [
+            "false",
+            "true"
+          ],
+          "description": "是否同时递归终止该进程派生的所有子进程与进程树"
         }
       ],
-      "output_type": "bool"
+      "output_type": "number"
     },
     {
       "tag": "LaunchFile",
-      "display_name": "打开关联文件 (LaunchFile)",
+      "display_name": "打开文件/文档 (LaunchFile)",
       "icon": "🚀",
       "platforms": "All",
       "description": "使用操作系统默认关联程序打开指定的文档、表格、图片或脚本",
@@ -375,8 +349,10 @@
         {
           "name": "file",
           "display_name": "文件路径",
-          "intrinsic_type": "FilePicker",
-          "default_type": "string",
+          "intrinsic_type": "Path",
+          "required": true,
+          "group": "文件路径",
+          "default_type": "Path",
           "default_value": "",
           "presets": [],
           "description": "目标文件的完整路径"
@@ -385,62 +361,290 @@
       "output_type": "bool"
     },
     {
-      "tag": "OpenApplication",
-      "display_name": "打开应用 (OpenApplication)",
-      "icon": "💻",
+      "tag": "ManageLocalUser",
+      "display_name": "本地用户管理 (ManageLocalUser)",
+      "icon": "👤",
       "platforms": "All",
-      "description": "启动指定的系统应用程序并可传入命令行参数与工作目录（非阻塞运行）",
+      "description": "统一管理操作系统本地用户账户：支持检测用户是否存在(exists)、创建新用户(add)以及删除用户(delete)",
       "keywords": [
         "system",
-        "app",
-        "application",
-        "open",
-        "start",
-        "打开程序",
-        "运行软件"
+        "user",
+        "account",
+        "local",
+        "add",
+        "del",
+        "exists",
+        "本地用户",
+        "创建用户",
+        "删除用户",
+        "用户存在"
       ],
       "fields": [
         {
-          "name": "app",
-          "display_name": "程序路径/名称",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "name": "action",
+          "display_name": "操作类型",
+          "intrinsic_type": "Enum",
+          "required": true,
+          "group": "操作与账户",
+          "default_type": "String",
+          "default_value": "exists",
+          "presets": [
+            "exists",
+            "add",
+            "delete"
+          ],
+          "description": "操作类型：exists (检测用户存在)、add (创建本地账户)、delete (删除本地账户)"
+        },
+        {
+          "name": "account",
+          "display_name": "用户账户名",
+          "intrinsic_type": "String",
+          "required": true,
+          "group": "操作与账户",
+          "default_type": "String",
           "default_value": "",
           "presets": [
-            "notepad.exe",
-            "calc.exe"
+            "Administrator",
+            "guest",
+            "testuser"
           ],
-          "description": "目标程序的可执行文件路径或名称"
+          "description": "待操作的操作系统本地用户名"
         },
         {
-          "name": "command_line",
-          "display_name": "启动参数",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "name": "password",
+          "display_name": "账户密码",
+          "intrinsic_type": "String",
+          "group": "凭据与配置",
+          "visible_if": {
+            "field": "action",
+            "one_of": ["add"]
+          },
+          "default_type": "String",
           "default_value": "",
           "presets": [],
-          "description": "附加命令行启动参数"
+          "description": "创建账户时设置的登录密码（仅在 add 操作时生效）"
         },
         {
-          "name": "working_directory",
-          "display_name": "工作目录",
-          "intrinsic_type": "FolderPicker",
-          "default_type": "string",
+          "name": "home_dir",
+          "display_name": "家目录路径",
+          "intrinsic_type": "Path",
+          "group": "凭据与配置",
+          "is_advanced": true,
+          "default_type": "Path",
           "default_value": "",
           "presets": [],
-          "description": "程序运行的工作目录路径"
+          "description": "指定用户的家目录路径（留空则使用系统默认目录）"
         },
         {
-          "name": "env",
-          "display_name": "环境变量",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "附加环境变量配置 (KEY=VALUE)"
+          "name": "delete_home_dir",
+          "display_name": "同时删除家目录",
+          "intrinsic_type": "Boolean",
+          "group": "凭据与配置",
+          "is_advanced": true,
+          "visible_if": {
+            "field": "action",
+            "one_of": ["delete"]
+          },
+          "default_type": "Boolean",
+          "default_value": "false",
+          "presets": [
+            "false",
+            "true"
+          ],
+          "description": "删除用户时是否同时清理其个人家目录文件（仅在 delete 操作时生效）"
         }
       ],
-      "output_type": "None"
+      "output_type": "string"
+    },
+    {
+      "tag": "ManageRegistry",
+      "display_name": "注册表管理 (ManageRegistry)",
+      "icon": "📑",
+      "platforms": "Windows",
+      "description": "统一管理 Windows 注册表：支持读取键值(read)、写入键值(write)、删除键值或子项(delete)以及检测路径是否存在(exists)",
+      "keywords": [
+        "system",
+        "registry",
+        "reg",
+        "windows",
+        "read",
+        "write",
+        "delete",
+        "exists",
+        "注册表",
+        "读取注册表",
+        "写入注册表",
+        "删除注册表",
+        "检查注册表"
+      ],
+      "fields": [
+        {
+          "name": "action",
+          "display_name": "操作类型",
+          "intrinsic_type": "Enum",
+          "required": true,
+          "group": "注册表路径",
+          "default_type": "String",
+          "default_value": "read",
+          "presets": [
+            "read",
+            "write",
+            "delete",
+            "exists"
+          ],
+          "description": "操作类型：read (读取)、write (写入)、delete (删除)、exists (判断存在)"
+        },
+        {
+          "name": "hive",
+          "display_name": "根键 (Hive)",
+          "intrinsic_type": "Enum",
+          "required": true,
+          "group": "注册表路径",
+          "default_type": "String",
+          "default_value": "HKEY_CURRENT_USER",
+          "presets": [
+            "HKEY_CURRENT_USER",
+            "HKEY_LOCAL_MACHINE",
+            "HKEY_CLASSES_ROOT",
+            "HKEY_USERS",
+            "HKEY_CURRENT_CONFIG"
+          ],
+          "description": "注册表根键名称"
+        },
+        {
+          "name": "key_path",
+          "display_name": "子键路径 (Key Path)",
+          "intrinsic_type": "Enum",
+          "required": true,
+          "group": "注册表路径",
+          "default_type": "String",
+          "default_value": "",
+          "presets": [
+            "Software\\MyApp",
+            "Environment"
+          ],
+          "description": "注册表子键完整路径，不需要包含根键名称"
+        },
+        {
+          "name": "value_name",
+          "display_name": "值名称 (Value Name)",
+          "intrinsic_type": "Enum",
+          "group": "键值数据",
+          "default_type": "String",
+          "default_value": "",
+          "presets": [
+            "",
+            "Version",
+            "InstallPath"
+          ],
+          "description": "待操作的键值名称；留空表示默认值"
+        },
+        {
+          "name": "value_type",
+          "display_name": "值类型 (Value Type)",
+          "intrinsic_type": "Enum",
+          "group": "键值数据",
+          "visible_if": {
+            "field": "action",
+            "one_of": ["write"]
+          },
+          "default_type": "String",
+          "default_value": "REG_SZ",
+          "presets": [
+            "REG_SZ",
+            "REG_DWORD",
+            "REG_BINARY",
+            "REG_EXPAND_SZ",
+            "REG_MULTI_SZ",
+            "REG_QWORD"
+          ],
+          "description": "写入时的数据类型（仅在 write 操作时生效）"
+        },
+        {
+          "name": "data",
+          "display_name": "写入数据 (Data)",
+          "intrinsic_type": "String",
+          "group": "键值数据",
+          "visible_if": {
+            "field": "action",
+            "one_of": ["write"]
+          },
+          "default_type": "String",
+          "default_value": "",
+          "presets": [],
+          "description": "写入时的数据内容（字符串、整数或十六进制）"
+        }
+      ],
+      "output_type": "string"
+    },
+    {
+      "tag": "ManageService",
+      "display_name": "服务管理 (ManageService)",
+      "icon": "⚙️",
+      "platforms": "Windows",
+      "description": "统一管理系统服务：支持查询服务状态(status)、启动服务(start)、停止服务(stop)以及重启服务(restart)",
+      "keywords": [
+        "system",
+        "service",
+        "windows",
+        "status",
+        "start",
+        "stop",
+        "restart",
+        "服务管理",
+        "启动服务",
+        "停止服务",
+        "重启服务",
+        "服务状态"
+      ],
+      "fields": [
+        {
+          "name": "action",
+          "display_name": "操作类型",
+          "intrinsic_type": "Enum",
+          "required": true,
+          "group": "服务操作",
+          "default_type": "String",
+          "default_value": "status",
+          "presets": [
+            "status",
+            "start",
+            "stop",
+            "restart"
+          ],
+          "description": "操作类型：status (查询状态)、start (启动服务)、stop (停止服务)、restart (重启服务)"
+        },
+        {
+          "name": "service_name",
+          "display_name": "服务名称",
+          "intrinsic_type": "Enum",
+          "required": true,
+          "group": "服务操作",
+          "default_type": "String",
+          "default_value": "",
+          "presets": [
+            "Spooler",
+            "wuauserv"
+          ],
+          "description": "Windows 系统的内部服务名称（如 Spooler、wuauserv）"
+        },
+        {
+          "name": "wait_timeout",
+          "display_name": "超时时间(秒)",
+          "intrinsic_type": "Integer",
+          "group": "高级控制",
+          "is_advanced": true,
+          "default_type": "Number",
+          "default_value": "30",
+          "presets": [
+            "10",
+            "30",
+            "60"
+          ],
+          "description": "等待服务操作完成的超时时间（秒）"
+        }
+      ],
+      "output_type": "string"
     },
     {
       "tag": "OpenUrl",
@@ -461,8 +665,10 @@
         {
           "name": "url",
           "display_name": "目标网址",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "intrinsic_type": "String",
+          "required": true,
+          "group": "网页地址",
+          "default_type": "String",
           "default_value": "https://",
           "presets": [
             "https://www.google.com"
@@ -473,345 +679,85 @@
       "output_type": "bool"
     },
     {
-      "tag": "Random",
-      "display_name": "随机数 (Random)",
-      "icon": "🎲",
+      "tag": "SetEnv",
+      "display_name": "设置环境变量 (SetEnv)",
+      "icon": "🌿",
       "platforms": "All",
-      "description": "生成指定区间范围 [min, max] 内的随机整数",
+      "description": "设置当前进程、用户或系统级的环境变量数值",
       "keywords": [
         "system",
-        "random",
-        "rand",
-        "number",
-        "随机数",
-        "生成随机数"
+        "env",
+        "environment",
+        "set",
+        "环境变量"
       ],
       "fields": [
         {
-          "name": "min",
-          "display_name": "最小值",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "0",
+          "name": "name",
+          "display_name": "变量名称",
+          "intrinsic_type": "String",
+          "required": true,
+          "group": "变量配置",
+          "default_type": "String",
+          "default_value": "",
+          "presets": [],
+          "description": "环境变量键名"
+        },
+        {
+          "name": "value",
+          "display_name": "变量数值",
+          "intrinsic_type": "String",
+          "required": true,
+          "group": "变量配置",
+          "default_type": "String",
+          "default_value": "",
+          "presets": [],
+          "description": "准备设置的新值"
+        },
+        {
+          "name": "scope",
+          "display_name": "作用域",
+          "intrinsic_type": "Enum",
+          "group": "变量配置",
+          "default_type": "String",
+          "default_value": "process",
           "presets": [
-            "0",
-            "1"
+            "process",
+            "user",
+            "system"
           ],
-          "description": "随机数下限值"
-        },
-        {
-          "name": "max",
-          "display_name": "最大值",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "100",
-          "presets": [
-            "10",
-            "100",
-            "1000"
-          ],
-          "description": "随机数上限值"
-        }
-      ],
-      "output_type": "number"
-    },
-    {
-      "tag": "ReadMemory",
-      "display_name": "读取内存 (ReadMemory)",
-      "icon": "🧠",
-      "platforms": "All",
-      "description": "读取目标软件进程或模块内存地址中的数据，支持多种数据类型与偏移链解析",
-      "keywords": [
-        "system",
-        "memory",
-        "read",
-        "process",
-        "读取内存",
-        "内存读取"
-      ],
-      "fields": [
-        {
-          "name": "app",
-          "display_name": "目标进程",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "目标进程名称或标识"
-        },
-        {
-          "name": "backend",
-          "display_name": "驱动模式",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "auto",
-          "presets": [
-            "auto",
-            "native"
-          ],
-          "description": "内存访问驱动模式"
-        },
-        {
-          "name": "address",
-          "display_name": "内存地址",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "0x0",
-          "presets": [
-            "0x0"
-          ],
-          "description": "十六进制内存地址或基址"
-        },
-        {
-          "name": "data_type",
-          "display_name": "数据类型",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "i32",
-          "presets": [
-            "i32",
-            "i64",
-            "u32",
-            "u64",
-            "f32",
-            "f64",
-            "string_utf8",
-            "string_utf16",
-            "bytes",
-            "hex"
-          ],
-          "description": "读取解析的数据格式"
-        },
-        {
-          "name": "size",
-          "display_name": "读取长度",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "4",
-          "presets": [
-            "4",
-            "8",
-            "16",
-            "32",
-            "64"
-          ],
-          "description": "读取字节数（适用于 bytes/hex/string）"
-        },
-        {
-          "name": "offsets",
-          "display_name": "指针偏移",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "多级指针偏移链（如 0x10,0x28）"
-        },
-        {
-          "name": "memflow_connector",
-          "display_name": "硬件连接通道",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "可选的外部物理直连通道配置"
-        }
-      ],
-      "output_type": "Mixed"
-    },
-    {
-      "tag": "Runas",
-      "display_name": "以管理员身份提权运行 (Runas)",
-      "icon": "🛡",
-      "platforms": "All",
-      "description": "使用管理员权限（UAC提权）启动指定程序或执行特权命令",
-      "keywords": [
-        "system",
-        "runas",
-        "admin",
-        "uac",
-        "elevate",
-        "管理员运行",
-        "提权运行"
-      ],
-      "fields": [
-        {
-          "name": "app",
-          "display_name": "程序路径/命令",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [
-            "cmd.exe",
-            "powershell.exe"
-          ],
-          "description": "可执行程序路径或系统命令"
-        },
-        {
-          "name": "account",
-          "display_name": "指定账户",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "指定运行的用户账户名称（留空使用当前提权）"
-        },
-        {
-          "name": "password",
-          "display_name": "账户密码",
-          "intrinsic_type": "Password",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "用户账户密码（可选）"
-        },
-        {
-          "name": "working_directory",
-          "display_name": "工作目录",
-          "intrinsic_type": "FolderPicker",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "程序运行的工作目录路径"
-        },
-        {
-          "name": "command_line",
-          "display_name": "命令行参数",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "附加命令行运行参数"
-        },
-        {
-          "name": "env",
-          "display_name": "环境变量",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "附加环境变量配置"
+          "description": "作用域"
         }
       ],
       "output_type": "None"
     },
     {
-      "tag": "SearchMemory",
-      "display_name": "搜索内存 (SearchMemory)",
-      "icon": "🔎",
-      "platforms": "All",
-      "description": "在目标软件进程或模块内存中检索特定的特征码或字节序列",
-      "keywords": [
-        "system",
-        "memory",
-        "search",
-        "scan",
-        "aob",
-        "pattern",
-        "内存搜索",
-        "特征码检索"
-      ],
-      "fields": [
-        {
-          "name": "app",
-          "display_name": "目标进程",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "目标进程名称或标识"
-        },
-        {
-          "name": "backend",
-          "display_name": "驱动模式",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "auto",
-          "presets": [
-            "auto",
-            "native"
-          ],
-          "description": "内存扫描驱动模式"
-        },
-        {
-          "name": "pattern",
-          "display_name": "特征码序列",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "十六进制特征码（如 48 8B 05 ?? ?? ?? ??）"
-        },
-        {
-          "name": "module",
-          "display_name": "目标模块",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "限定搜索的动态链接库模块名称"
-        },
-        {
-          "name": "rip_offset",
-          "display_name": "相对寻址偏移",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "相对偏移计算位置（可选）"
-        },
-        {
-          "name": "instruction_len",
-          "display_name": "指令长度",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "完整机器指令长度（可选）"
-        },
-        {
-          "name": "match_all",
-          "display_name": "返回全部匹配",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "false",
-          "presets": [
-            "false",
-            "true"
-          ],
-          "description": "是否返回所有匹配地址（false 表示仅返回首个）"
-        },
-        {
-          "name": "memflow_connector",
-          "display_name": "硬件连接通道",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "可选的外部物理直连通道配置"
-        }
-      ],
-      "output_type": "Array"
-    },
-    {
       "tag": "StartProcess",
-      "display_name": "启动新进程 (StartProcess)",
+      "display_name": "启动应用/进程 (StartProcess)",
       "icon": "▶",
       "platforms": "All",
-      "description": "在后台创建并启动指定的独立操作系统进程或命令行任务",
+      "description": "在后台创建并启动指定的独立操作系统进程，支持静默隐藏运行、UAC管理员提权及指定账户凭据启动",
       "keywords": [
         "system",
         "process",
         "spawn",
         "start",
+        "runas",
+        "admin",
+        "uac",
         "启动进程",
-        "创建进程"
+        "创建进程",
+        "提权运行",
+        "管理员运行"
       ],
       "fields": [
         {
           "name": "app",
           "display_name": "程序路径/命令",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "intrinsic_type": "String",
+          "required": true,
+          "group": "程序与命令行",
+          "default_type": "String",
           "default_value": "",
           "presets": [],
           "description": "目标可执行文件路径或系统命令"
@@ -819,17 +765,29 @@
         {
           "name": "command_line",
           "display_name": "命令行参数",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "intrinsic_type": "String",
+          "group": "程序与命令行",
+          "default_type": "String",
           "default_value": "",
           "presets": [],
           "description": "启动时传递的命令行参数"
         },
         {
+          "name": "working_directory",
+          "display_name": "工作目录",
+          "intrinsic_type": "Path",
+          "group": "工作环境",
+          "default_type": "Path",
+          "default_value": "",
+          "presets": [],
+          "description": "进程的工作目录完整路径"
+        },
+        {
           "name": "no_window",
           "display_name": "隐藏窗口",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "intrinsic_type": "Boolean",
+          "group": "权限与模式",
+          "default_type": "Boolean",
           "default_value": "false",
           "presets": [
             "false",
@@ -838,25 +796,53 @@
           "description": "是否在无窗口后台模式下静默启动"
         },
         {
-          "name": "working_directory",
-          "display_name": "工作目录",
-          "intrinsic_type": "FolderPicker",
-          "default_type": "string",
+          "name": "run_as_admin",
+          "display_name": "以管理员提权运行 (UAC)",
+          "intrinsic_type": "Boolean",
+          "group": "权限与模式",
+          "default_type": "Boolean",
+          "default_value": "false",
+          "presets": [
+            "false",
+            "true"
+          ],
+          "description": "是否以管理员权限（UAC提权）启动运行"
+        },
+        {
+          "name": "account",
+          "display_name": "指定账户 (可选)",
+          "intrinsic_type": "String",
+          "group": "指定凭据",
+          "is_advanced": true,
+          "default_type": "String",
           "default_value": "",
           "presets": [],
-          "description": "进程的工作目录完整路径"
+          "description": "指定运行的用户账户名称（留空使用当前用户）"
+        },
+        {
+          "name": "password",
+          "display_name": "账户密码 (可选)",
+          "intrinsic_type": "Password",
+          "group": "指定凭据",
+          "is_advanced": true,
+          "default_type": "Password",
+          "default_value": "",
+          "presets": [],
+          "description": "用户账户密码（与指定账户配合使用）"
         },
         {
           "name": "env",
           "display_name": "环境变量",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "intrinsic_type": "String",
+          "group": "高级环境",
+          "is_advanced": true,
+          "default_type": "String",
           "default_value": "",
           "presets": [],
           "description": "附加环境变量配置 (KEY=VALUE)"
         }
       ],
-      "output_type": "None"
+      "output_type": "number"
     },
     {
       "tag": "SuspendSystem",
@@ -880,8 +866,10 @@
         {
           "name": "option",
           "display_name": "电源操作模式",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "intrinsic_type": "Enum",
+          "required": true,
+          "group": "电源模式",
+          "default_type": "String",
           "default_value": "Sleep",
           "presets": [
             "Sleep",
@@ -896,190 +884,63 @@
       "output_type": "bool"
     },
     {
-      "tag": "UserAdd",
-      "display_name": "添加系统本地用户 (UserAdd)",
-      "icon": "👤",
+      "tag": "WaitForProcess",
+      "display_name": "等待进程 (WaitForProcess)",
+      "icon": "⏳",
       "platforms": "All",
-      "description": "在当前操作系统中创建新的本地电脑用户账户",
+      "description": "等待指定的操作系统进程启动进入运行状态或执行完成退出，支持超时控制",
       "keywords": [
         "system",
-        "user",
-        "add",
-        "account",
-        "添加用户",
-        "创建用户",
-        "本地账号"
-      ],
-      "fields": [
-        {
-          "name": "account",
-          "display_name": "用户名/账号",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "新创建的系统本地用户账户名称"
-        },
-        {
-          "name": "password",
-          "display_name": "初始密码",
-          "intrinsic_type": "Password",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "用户账户密码"
-        },
-        {
-          "name": "home_dir",
-          "display_name": "主目录路径",
-          "intrinsic_type": "FolderPicker",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "用户的主目录路径（留空使用系统默认）"
-        }
-      ],
-      "output_type": "bool"
-    },
-    {
-      "tag": "Wait",
-      "display_name": "延时等待 (Wait)",
-      "icon": "⏱",
-      "platforms": "All",
-      "description": "暂停执行等待指定时间（支持秒数或毫秒数）",
-      "keywords": [
-        "system",
-        "wait",
-        "sleep",
-        "delay",
-        "延时等待",
-        "等待",
-        "暂停"
-      ],
-      "fields": [
-        {
-          "name": "value",
-          "display_name": "等待时长",
-          "intrinsic_type": "real",
-          "default_type": "number",
-          "default_value": "1",
-          "presets": [
-            "0.5",
-            "1",
-            "2",
-            "5",
-            "10"
-          ],
-          "description": "等待时长数值（支持浮点秒数或毫秒）"
-        }
-      ],
-      "output_type": "None"
-    },
-    {
-      "tag": "WriteMemory",
-      "display_name": "写入内存 (WriteMemory)",
-      "icon": "✏",
-      "platforms": "All",
-      "description": "向目标软件进程或模块内存地址写入数据，支持自动解除写保护",
-      "keywords": [
-        "system",
-        "memory",
-        "write",
         "process",
-        "写入内存",
-        "修改内存"
+        "wait",
+        "timeout",
+        "等待进程",
+        "等待退出",
+        "等待启动"
       ],
       "fields": [
         {
           "name": "app",
-          "display_name": "目标进程",
-          "intrinsic_type": "string",
-          "default_type": "string",
+          "display_name": "目标进程 (名称/PID/路径)",
+          "intrinsic_type": "String",
+          "required": true,
+          "group": "进程选择",
+          "default_type": "String",
           "default_value": "",
-          "presets": [],
-          "description": "目标进程名称或标识"
-        },
-        {
-          "name": "backend",
-          "display_name": "驱动模式",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "auto",
           "presets": [
-            "auto",
-            "native"
+            "notepad.exe",
+            "cmd.exe"
           ],
-          "description": "内存写入驱动模式"
+          "description": "目标应用程序名称、PID 或通配符路径"
         },
         {
-          "name": "address",
-          "display_name": "内存地址",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "0x0",
+          "name": "wait_type",
+          "display_name": "等待模式",
+          "intrinsic_type": "Enum",
+          "required": true,
+          "group": "等待模式",
+          "default_type": "String",
+          "default_value": "WaitForExit",
           "presets": [
-            "0x0"
+            "WaitForExit",
+            "WaitForStart"
           ],
-          "description": "十六进制内存地址或基址"
+          "description": "等待模式：WaitForExit (等待退出) 或 WaitForStart (等待启动)"
         },
         {
-          "name": "data_type",
-          "display_name": "数据类型",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "i32",
+          "name": "timeout_sec",
+          "display_name": "最大等待超时(秒)",
+          "intrinsic_type": "Integer",
+          "required": true,
+          "group": "等待模式",
+          "default_type": "Number",
+          "default_value": "30",
           "presets": [
-            "i32",
-            "i64",
-            "u32",
-            "u64",
-            "f32",
-            "f64",
-            "string_utf8",
-            "string_utf16",
-            "bytes",
-            "hex"
+            "10",
+            "30",
+            "60"
           ],
-          "description": "写入数据格式"
-        },
-        {
-          "name": "value",
-          "display_name": "写入数值/内容",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "待写入的数据数值、文本或十六进制字节串"
-        },
-        {
-          "name": "offsets",
-          "display_name": "指针偏移",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "多级指针偏移链（如 0x10,0x28）"
-        },
-        {
-          "name": "unprotect",
-          "display_name": "自动解除写保护",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "true",
-          "presets": [
-            "true",
-            "false"
-          ],
-          "description": "写入前是否自动临时修改内存页面保护属性"
-        },
-        {
-          "name": "memflow_connector",
-          "display_name": "硬件连接通道",
-          "intrinsic_type": "string",
-          "default_type": "string",
-          "default_value": "",
-          "presets": [],
-          "description": "可选的外部物理直连通道配置"
+          "description": "超时时间(秒)，0 表示无限等待"
         }
       ],
       "output_type": "bool"

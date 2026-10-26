@@ -1,5 +1,9 @@
 ﻿# 退出 (Exit)
 
+- **支持平台**：`Cross-Platform` (Windows / Linux / macOS)
+- **需要管理员权限**：`否` (`requires_admin: false`)
+
+## 功能描述
 直接终止当前自动化工作流程的执行。
 
 ## 运行参数

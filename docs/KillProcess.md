@@ -1,5 +1,9 @@
 ﻿# 终止进程 (KillProcess)
 
+- **支持平台**：`Cross-Platform` (Windows / Linux / macOS)
+- **需要管理员权限**：`否` (`requires_admin: false`)
+
+## 功能描述
 根据进程名称、完整路径或通配符表达式结束指定的系统进程。
 
 ## 运行参数

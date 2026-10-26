@@ -1,6 +1,12 @@
-﻿# 打开关联文件 (LaunchFile)
+# 打开文件/文档 (LaunchFile)
 
+- **支持平台**：`Cross-Platform` (Windows / Linux / macOS)
+- **需要管理员权限**：`否` (`requires_admin: false`)
+
+## 功能描述
 使用操作系统默认关联程序打开指定的文档、表格、图片或脚本文件。
+
+> **注意**：本动作仅用于打开本地文件系统路径，严格禁止传入 `http://` 或 `https://` 网页网址。若需在默认浏览器中打开网络链接，请使用 `OpenUrl` 动作。
 
 ## 运行参数
 

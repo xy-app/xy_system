@@ -1,5 +1,9 @@
 ﻿# 读取/设置剪贴板内容 (ClipboardValue)
 
+- **支持平台**：`Cross-Platform` (Windows / Linux / macOS)
+- **需要管理员权限**：`否` (`requires_admin: false`)
+
+## 功能描述
 读取系统剪贴板中的文字内容，或将新文字写入系统剪贴板。
 
 ## 运行参数

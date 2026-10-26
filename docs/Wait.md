@@ -1,5 +1,9 @@
 ﻿# 延时等待 (Wait)
 
+- **支持平台**：`Cross-Platform` (Windows / Linux / macOS)
+- **需要管理员权限**：`否` (`requires_admin: false`)
+
+## 功能描述
 暂停执行等待指定时间，支持精确的小数秒或毫秒级等待。
 
 ## 运行参数

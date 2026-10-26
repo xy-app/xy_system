@@ -1,5 +1,9 @@
 ﻿# 检测进程 (ExistProcess)
 
+- **支持平台**：`Cross-Platform` (Windows / Linux / macOS)
+- **需要管理员权限**：`否` (`requires_admin: false`)
+
+## 功能描述
 检查指定的应用程序或进程当前是否正在操作系统后台运行。
 
 ## 运行参数

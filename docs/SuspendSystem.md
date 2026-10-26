@@ -1,5 +1,9 @@
 ﻿# 系统电源与待机控制 (SuspendSystem)
 
+- **支持平台**：`Cross-Platform` (Windows / Linux / macOS)
+- **需要管理员权限**：`否` (`requires_admin: false`)
+
+## 功能描述
 控制计算机进入睡眠、休眠、锁屏、重启或关机状态。
 
 ## 运行参数

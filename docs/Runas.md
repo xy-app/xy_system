@@ -1,5 +1,9 @@
 ﻿# 以管理员身份提权运行 (Runas)
 
+- **支持平台**：`Cross-Platform` (Windows / Linux / macOS)
+- **需要管理员权限**：`是` (`requires_admin: true`)
+
+## 功能描述
 使用管理员权限（UAC提权）启动指定程序或执行特权命令。
 
 ## 运行参数
